@@ -8,12 +8,12 @@ module.exports = {
     '!**/test/**'
   ],
   coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
+  coverageProvider: 'babel',
+  preset: '@shelf/jest-mongodb',
   testEnvironment: 'node',
   transform: {
     '.+\\.ts$': 'ts-jest'
   },
-  preset: '@shelf/jest-mongodb',
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1'
   }
