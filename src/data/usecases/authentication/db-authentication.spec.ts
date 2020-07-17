@@ -60,4 +60,14 @@ describe('DdAuthentication UseCase', () => {
 
     await expect(promise).rejects.toThrow()
   })
+
+  it('should null if LoadAccountByEmailRepository returns null', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut()
+
+    jest.spyOn(loadAccountByEmailRepositoryStub, 'load').mockReturnValueOnce(null)
+
+    const accessToken = await sut.auth(makeFakeAuthentication())
+
+    expect(accessToken).toBeNull()
+  })
 })
