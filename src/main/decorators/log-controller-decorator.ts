@@ -1,5 +1,5 @@
 import { Controller, HttpResponse, HttpRequest } from '../../presentation/protocols'
-import { LogErrorRepository } from '../../data/protocols/database/log-error-repository'
+import { LogErrorRepository } from '../../data/protocols/database/log/log-error-repository'
 
 export class LogControllerDecorator implements Controller {
   constructor (
