@@ -5,5 +5,12 @@
     "target": "ES2018",
     "esModuleInterop": true,
     "allowJs": true
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

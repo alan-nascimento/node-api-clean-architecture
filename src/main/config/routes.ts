@@ -1,4 +1,4 @@
-import fg from 'fast-glob'
+import { readdirSync } from 'fs'
 import { Application, Router } from 'express'
 
 export const routes = (server: Application): void => {
@@ -6,7 +6,11 @@ export const routes = (server: Application): void => {
 
   server.use('/api', router)
 
-  fg.sync('**/src/main/routes/**routes.ts').map(async file => {
-    return (await import(`../../../${file}`)).default(router)
+  readdirSync(`${__dirname}/../routes`).map(async file => {
+    const exclude = file.includes('.test.ts' || '.spec.ts')
+
+    if (!exclude) {
+      (await import(`../routes/${file}`)).default(router)
+    }
   })
 }
