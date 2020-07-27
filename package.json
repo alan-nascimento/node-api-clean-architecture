@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "sucrase-node ./src/main/server.ts",
+    "up": "npm run build && docker-compose up",
+    "stop": "docker-compose down",
     "build": "rimraf dist && tsc",
     "start": "node ./dist/main/server.js",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -57,7 +58,6 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.9",
