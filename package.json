@@ -25,6 +25,9 @@
     "url": "https://github.com/alan-nascimento/node-api-clean-architecture/issues"
   },
   "homepage": "https://github.com/alan-nascimento/node-api-clean-architecture#readme",
+  "engines": {
+    "node": "12"
+  },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.1.5",
     "@types/bcrypt": "^3.0.0",
