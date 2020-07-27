@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "up": "npm run build && docker-compose up",
-    "stop": "docker-compose down",
     "build": "rimraf dist && tsc",
     "start": "node ./dist/main/server.js",
+    "debug": "node --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
+    "up": "npm run build && docker-compose up",
+    "down": "docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:ci": "npm test -- --coverage --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
