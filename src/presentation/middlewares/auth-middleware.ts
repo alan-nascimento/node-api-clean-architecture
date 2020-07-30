@@ -12,7 +12,7 @@ export class AuthMiddleware implements Middleware {
     const accessToken = httpRequest.headers?.['x-access-token']
 
     if (accessToken) {
-      await this.loadAccountByToken.add(accessToken)
+      await this.loadAccountByToken.load(accessToken)
     }
 
     return forbidden(new AccessDeniedError())
