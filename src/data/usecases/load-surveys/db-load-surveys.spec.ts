@@ -1,3 +1,5 @@
+import MockDate from 'mockdate'
+
 import { LoadSurveysRepository } from '../../protocols/database/survey/load-surveys-repository'
 import { SurveyModel } from '../../../domain/models/survey'
 import { DbLoadSurveys } from './db-load-surveys'
@@ -50,6 +52,14 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadSurveys', () => {
+  beforeAll(() => {
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
+
   it('should call LoadSurveysRepository', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadSurveysRepositoryStub, 'loadAll')
@@ -57,5 +67,13 @@ describe('DbLoadSurveys', () => {
     await sut.load()
 
     expect(loadAllSpy).toHaveBeenCalled()
+  })
+
+  it('should return a list of surveys on LoadSurveysRepository success', async () => {
+    const { sut } = makeSut()
+
+    const surveys = await sut.load()
+
+    expect(surveys).toEqual(makeFakeSurveys())
   })
 })
