@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
     "start": "node ./dist/main/server.js",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "up": "npm run build && docker-compose up",
@@ -30,6 +30,9 @@
   "homepage": "https://github.com/alan-nascimento/node-api-clean-architecture#readme",
   "engines": {
     "node": "12"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.1.5",
@@ -64,6 +67,7 @@
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^3.5.9",
     "nodemon": "^2.0.4",
     "validator": "^13.1.1"
