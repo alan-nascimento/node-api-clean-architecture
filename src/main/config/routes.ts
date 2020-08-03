@@ -7,9 +7,9 @@ export const routes = (server: Application): void => {
   server.use('/api', router)
 
   readdirSync(`${__dirname}/../routes`).map(async file => {
-    const exclude = file.includes('.test.ts' || '.spec.ts')
+    const include = !file.includes('.test.ts' || '.spec.ts') && !file.endsWith('.map')
 
-    if (!exclude) {
+    if (include) {
       (await import(`../routes/${file}`)).default(router)
     }
   })
