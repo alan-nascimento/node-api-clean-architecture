@@ -51,7 +51,6 @@ describe('Account Mongo Repository', () => {
     it('should load all surveys on success', async () => {
       await surveyCollection.insertMany([
         {
-          id: 'any_id',
           question: 'any_question',
           answers: [{
             image: 'any_image',
@@ -60,7 +59,6 @@ describe('Account Mongo Repository', () => {
           date: new Date()
         },
         {
-          id: 'any_other_id',
           question: 'any_other_question',
           answers: [{
             image: 'any_other_image',
@@ -74,6 +72,7 @@ describe('Account Mongo Repository', () => {
       const surveys = await sut.loadAll()
 
       expect(surveys.length).toBe(2)
+      expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('any_question')
       expect(surveys[1].question).toBe('any_other_question')
     })
@@ -103,6 +102,7 @@ describe('Account Mongo Repository', () => {
       const survey = await sut.loadById(id)
 
       expect(survey).toBeTruthy()
+      expect(survey.id).toBeTruthy()
     })
 
     it('should load empty list', async () => {
