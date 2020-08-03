@@ -1,6 +1,6 @@
+import { ok, badRequest, serverError, forbidden } from '@/presentation/helpers/http/http-helper'
+import { MissingParamError, ServerError, EmailExistsError } from '@/presentation/errors'
 import { SignUpController } from './signup-controller'
-import { ok, badRequest, serverError, forbidden } from '../../../helpers/http/http-helper'
-import { MissingParamError, ServerError, EmailExistsError } from '../../../errors'
 import {
   AddAccount,
   Validation,

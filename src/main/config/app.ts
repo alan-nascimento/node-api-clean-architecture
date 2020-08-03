@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { cors, bodyParser, contentType } from '../middlewares'
+import { cors, bodyParser, contentType } from '@/main/middlewares'
 import { routes } from './routes'
 
 class App {

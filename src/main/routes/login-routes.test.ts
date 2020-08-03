@@ -2,8 +2,8 @@ import request from 'supertest'
 import { hash } from 'bcrypt'
 import { Collection } from 'mongodb'
 
-import app from '../config/app'
-import { MongoHelper } from '../../infra/database/mongodb/helpers/mongo-helper'
+import app from '@/main/config/app'
+import { MongoHelper } from '@/infra/database/mongodb/helpers/mongo-helper'
 
 describe('Login Routes', () => {
   let accountCollection: Collection
