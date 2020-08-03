@@ -5,8 +5,17 @@
     "target": "ES2018",
     "esModuleInterop": true,
     "allowJs": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    }
   },
-  "include": ["src"],
-  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
+  "include": [
+    "src"
+  ],
+  "exclude": []
 }
