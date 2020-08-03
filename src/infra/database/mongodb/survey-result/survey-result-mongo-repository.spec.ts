@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 
 import { MongoHelper } from '@/infra/database/mongodb/helpers/mongo-helper'
 import { SurveyModel } from '@/domain/models/survey'
@@ -7,14 +7,14 @@ import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 
 let surveyCollection: Collection
 let accountCollection: Collection
-let surveyResultsCollection: Collection
+let surveyResultCollection: Collection
 
 const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
 }
 
 const makeSurvey = async (): Promise<SurveyModel> => {
-  const result = await surveyResultsCollection.insertOne({
+  const result = await surveyCollection.insertOne({
     question: 'any_question',
     answers: [
       {
@@ -58,8 +58,8 @@ describe('Account Mongo Repository', () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
 
-    surveyResultsCollection = await MongoHelper.getCollection('surveyResults')
-    await surveyResultsCollection.deleteMany({})
+    surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    await surveyResultCollection.deleteMany({})
   })
 
   describe('save()', () => {
@@ -78,6 +78,32 @@ describe('Account Mongo Repository', () => {
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.id).toBeTruthy()
       expect(surveyResult.answer).toBe(survey.answers[0].answer)
+    })
+
+    it('should update survey result if its not new', async () => {
+      const account = await makeAccount()
+      const survey = await makeSurvey()
+
+      await surveyResultCollection.insertOne(
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(account.id),
+          answer: survey.answers[0].answer,
+          date: new Date()
+        }
+      )
+
+      const sut = makeSut()
+
+      const surveyResult = await sut.save({
+        surveyId: survey.id,
+        accountId: account.id,
+        answer: survey.answers[1].answer,
+        date: new Date()
+      })
+
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.answer).toBe(survey.answers[1].answer)
     })
   })
 })

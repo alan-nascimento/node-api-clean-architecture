@@ -19,7 +19,8 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
           answer,
           date
         }
-      }, {
+      },
+      {
         upsert: true,
         returnOriginal: false
       }
