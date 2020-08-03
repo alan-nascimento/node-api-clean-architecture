@@ -18,6 +18,8 @@ services:
     volumes:
       - ./dist:/usr/app/node-api-clean-architecture/dist
       - ./package.json:/usr/app/node-api-clean-architecture/package.json
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/node-api-clean-architecture
     ports:
       - "5000:5000"
       - "9222:9222"
