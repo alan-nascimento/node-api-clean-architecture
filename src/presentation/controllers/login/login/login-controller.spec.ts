@@ -1,7 +1,7 @@
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, serverError, unauthorized, ok } from '@/presentation/helpers/http/http-helper'
 import { LoginController } from './login-controller'
-import { HttpRequest, Authentication, AuthenticationModel, Validation } from './login-controller-protocols'
+import { HttpRequest, Authentication, AuthenticationParams, Validation } from './login-controller-protocols'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -12,7 +12,7 @@ const makeFakeRequest = (): HttpRequest => ({
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (authentication: AuthenticationModel): Promise<string> {
+    async auth (authentication: AuthenticationParams): Promise<string> {
       return Promise.resolve('any_token')
     }
   }

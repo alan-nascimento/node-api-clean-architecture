@@ -7,8 +7,8 @@ import {
   HttpRequest,
   AccountModel,
   Authentication,
-  AddAccountModel,
-  AuthenticationModel
+  AddAccountParams,
+  AuthenticationParams
 } from './signup-controller-protocols'
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -29,7 +29,7 @@ const makeFakeAccount = (): AccountModel => ({
 
 const makeAddAccountStub = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add (account: AddAccountModel): Promise<AccountModel> {
+    async add (account: AddAccountParams): Promise<AccountModel> {
       return new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
@@ -49,7 +49,7 @@ const makeValidationStub = (): Validation => {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (authentication: AuthenticationModel): Promise<string> {
+    async auth (authentication: AuthenticationParams): Promise<string> {
       return Promise.resolve('any_token')
     }
   }
