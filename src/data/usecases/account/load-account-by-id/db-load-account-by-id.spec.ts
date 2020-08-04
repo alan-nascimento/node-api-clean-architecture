@@ -1,22 +1,13 @@
 import MockDate from 'mockdate'
 
+import { throwError, mockSurveyModel } from '@/domain/test'
 import { DbLoadSurveyById } from './db-load-account-by-id'
 import { SurveyModel, LoadSurveyByIdRepository, LoadSurveyById } from './db-load-account-by-id-protocols'
-
-const makeFakeSurvey = (): SurveyModel => ({
-  id: 'any_id',
-  question: 'any_question',
-  answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
-  }],
-  date: new Date()
-})
 
 const makeLoadSurveyRepository = (): LoadSurveyById => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyById {
     async loadById (id: string): Promise<SurveyModel> {
-      return Promise.resolve(makeFakeSurvey())
+      return Promise.resolve(mockSurveyModel())
     }
   }
 
@@ -62,13 +53,13 @@ describe('DbLoadSurveyById Usecase', () => {
 
     const survey = await sut.loadById('any_id')
 
-    expect(survey).toEqual(makeFakeSurvey())
+    expect(survey).toEqual(mockSurveyModel())
   })
 
   it('should throw if loadSurveyByIdRepository throws', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
 
-    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.reject(new Error()))
+    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockImplementationOnce(throwError)
 
     const promise = sut.loadById('any_id')
 
