@@ -2,11 +2,13 @@ import express from 'express'
 
 import { cors, bodyParser, contentType } from '@/main/middlewares'
 import { routes } from './routes'
+import { swagger } from './swagger'
 
 class App {
   public server: express.Application = express()
 
   constructor () {
+    this.swagger()
     this.middlewares()
     this.routes()
   }
@@ -19,6 +21,10 @@ class App {
 
   private routes (): void {
     routes(this.server)
+  }
+
+  private swagger (): void {
+    swagger(this.server)
   }
 }
 
