@@ -6,7 +6,7 @@ import { HashComparer } from '@/data/protocols/criptography/hash-comparer'
 export const mockHasher = (): Hasher => {
   class EncrypterStub implements Hasher {
     async hash (value: string): Promise<string> {
-      return new Promise(resolve => resolve('hashed_password'))
+      return Promise.resolve('hashed_password')
     }
   }
 
