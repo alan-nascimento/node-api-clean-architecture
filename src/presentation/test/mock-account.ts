@@ -1,33 +1,46 @@
+import faker from 'faker'
+
+import { AccountModel } from '@/domain/models/account'
 import { mockAccountModel } from '@/domain/test'
-import { LoadAccountByToken } from '@/presentation/middlewares/auth-middleware-protocols'
-import { AddAccount, AccountModel, AddAccountParams, Authentication, AuthenticationParams } from '@/presentation/controllers/login/signup/signup-controller-protocols'
+import { LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
+import { AuthenticationModel } from '@/domain/models/authentication'
+import { AddAccount, AddAccountParams } from '@/domain/usecases/account/add-account'
+import { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
 
-export const mockAddAccount = (): AddAccount => {
-  class AddAccountStub implements AddAccount {
-    async add (account: AddAccountParams): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel())
-    }
+export class AddAccountSpy implements AddAccount {
+  accountModel = mockAccountModel()
+  addAccountParams: AddAccountParams
+
+  async add (account: AddAccountParams): Promise<AccountModel> {
+    this.addAccountParams = account
+
+    return this.accountModel
   }
-
-  return new AddAccountStub()
 }
 
-export const mockAuthentication = (): Authentication => {
-  class AuthenticationStub implements Authentication {
-    async auth (authentication: AuthenticationParams): Promise<string> {
-      return Promise.resolve('any_token')
-    }
+export class AuthenticationSpy implements Authentication {
+  authenticationParams: AuthenticationParams
+  authenticationModel = {
+    accessToken: faker.random.uuid(),
+    name: faker.name.findName()
   }
 
-  return new AuthenticationStub()
+  async auth (authenticationParams: AuthenticationParams): Promise<AuthenticationModel> {
+    this.authenticationParams = authenticationParams
+
+    return this.authenticationModel
+  }
 }
 
-export const mockLoadAccountByToken = (): LoadAccountByToken => {
-  class LoadAccountByTokenStub implements LoadAccountByToken {
-    async load (accessToken: string, role?: string): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel())
-    }
-  }
+export class LoadAccountByTokenSpy implements LoadAccountByToken {
+  accountModel = mockAccountModel()
+  accessToken: string
+  role: string
 
-  return new LoadAccountByTokenStub()
+  async load (accessToken: string, role?: string): Promise<AccountModel> {
+    this.accessToken = accessToken
+    this.role = role
+
+    return this.accountModel
+  }
 }

@@ -2,6 +2,7 @@ import { throwError } from '@/domain/test'
 import { EmailValidator } from '@/validation/protocols/email-validator'
 import { InvalidParamError } from '@/presentation/errors'
 import { mockEmailValidator } from '@/validation/test'
+
 import { EmailValidation } from './email-validation'
 
 type SutTypes = {

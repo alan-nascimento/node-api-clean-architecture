@@ -1,35 +1,36 @@
-import { mockSurveyModel, mockSurveyModels } from '@/domain/test'
-import { AddSurveyParams } from '@/data/usecases/survey/add-survey/db-add-account-protocols'
+import { SurveyModel } from '@/domain/models/survey'
+import { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
 import { AddSurveyRepository } from '@/data/protocols/database/survey/add-survey-repository'
 import { LoadSurveysRepository } from '@/data/protocols/database/survey/load-surveys-repository'
-import { SurveyModel, LoadSurveyByIdRepository } from '@/data/usecases/account/load-account-by-id/db-load-account-by-id-protocols'
+import { LoadSurveyByIdRepository } from '@/data/protocols/database/survey/load-survey-by-id-repository'
+import { mockSurveyModel, mockSurveyModels } from '@/domain/test'
 
-export const mockAddSurveyRepository = (): AddSurveyRepository => {
-  class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add (surveyData: AddSurveyParams): Promise<void> {
-      return Promise.resolve()
-    }
+export class AddSurveyRepositorySpy implements AddSurveyRepository {
+  addSurveyParams: AddSurveyParams
+
+  async add (data: AddSurveyParams): Promise<void> {
+    this.addSurveyParams = data
   }
-
-  return new AddSurveyRepositoryStub()
 }
 
-export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
-  class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
-    async loadById (id: string): Promise<SurveyModel> {
-      return Promise.resolve(mockSurveyModel())
-    }
-  }
+export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
+  surveyModel = mockSurveyModel()
+  id: string
 
-  return new LoadSurveyByIdRepositoryStub()
+  async loadById (id: string): Promise<SurveyModel> {
+    this.id = id
+
+    return this.surveyModel
+  }
 }
 
-export const mockLoadSurveysRepository = (): LoadSurveysRepository => {
-  class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-    async loadAll (): Promise<SurveyModel[]> {
-      return Promise.resolve(mockSurveyModels())
-    }
-  }
+export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
+  surveyModels = mockSurveyModels()
+  accountId: string
 
-  return new LoadSurveysRepositoryStub()
+  async loadAll (accountId: string): Promise<SurveyModel[]> {
+    this.accountId = accountId
+
+    return this.surveyModels
+  }
 }

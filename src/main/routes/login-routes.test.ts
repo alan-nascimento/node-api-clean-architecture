@@ -5,9 +5,9 @@ import { Collection } from 'mongodb'
 import app from '@/main/config/app'
 import { MongoHelper } from '@/infra/database/mongodb/helpers/mongo-helper'
 
-describe('Login Routes', () => {
-  let accountCollection: Collection
+let accountCollection: Collection
 
+describe('Login Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -22,34 +22,44 @@ describe('Login Routes', () => {
   })
 
   describe('POST /signup', () => {
-    it('should return 200 on success', async () => {
+    it('should return 200 on signup', async () => {
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'any_name',
-          email: 'any_email@mail.com',
-          password: 'any_password',
-          passwordConfirmation: 'any_password'
+          name: 'Alan',
+          email: 'alan.silva.n@hotmail.com',
+          password: '123',
+          passwordConfirmation: '123'
         })
         .expect(200)
+
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: 'Alan',
+          email: 'alan.silva.n@hotmail.com',
+          password: '123',
+          passwordConfirmation: '123'
+        })
+        .expect(403)
     })
   })
 
   describe('POST /login', () => {
-    it('should return 200 on success', async () => {
-      const password = await hash('any_password', 12)
+    it('should return 200 on login', async () => {
+      const password = await hash('123', 12)
 
       await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
+        name: 'Alan',
+        email: 'alan.silva.n@hotmail.com',
         password
       })
 
       await request(app)
         .post('/api/login')
         .send({
-          email: 'any_email@mail.com',
-          password: 'any_password'
+          email: 'alan.silva.n@hotmail.com',
+          password: '123'
         })
         .expect(200)
     })
@@ -58,8 +68,8 @@ describe('Login Routes', () => {
       await request(app)
         .post('/api/login')
         .send({
-          email: 'any_email@mail.com',
-          password: 'any_password'
+          email: 'alan.silva.n@hotmail.com',
+          password: '123'
         })
         .expect(401)
     })

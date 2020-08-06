@@ -2,7 +2,7 @@ import { AddAccount, AddAccountParams, AccountModel, Hasher, AddAccountRepositor
 
 export class DbAddAccount implements AddAccount {
   constructor (
-    private readonly encrypter: Hasher,
+    private readonly hasher: Hasher,
     private readonly addAccountRepository: AddAccountRepository,
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
   ) {}
@@ -10,11 +10,13 @@ export class DbAddAccount implements AddAccount {
   async add (accountData: AddAccountParams): Promise<AccountModel> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(accountData.email)
 
-    if (account) return null
+    if (!account) {
+      const hashedPassword = await this.hasher.hash(accountData.password)
+      const newAccount = await this.addAccountRepository.add({ ...accountData, password: hashedPassword })
 
-    const hashedPassword = await this.encrypter.hash(accountData.password)
-    const newAccount = await this.addAccountRepository.add({ ...accountData, password: hashedPassword })
+      return newAccount
+    }
 
-    return newAccount
+    return null
   }
 }
