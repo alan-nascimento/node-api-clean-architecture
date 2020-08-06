@@ -63,7 +63,7 @@ describe('Account Mongo Repository', () => {
   })
 
   describe('save()', () => {
-    test('Should add a survey result if its new', async () => {
+    test('should add a survey result if its new', async () => {
       const survey = await mockSurvey()
       const account = await mockAccount()
       const sut = makeSut()
@@ -83,7 +83,7 @@ describe('Account Mongo Repository', () => {
       expect(surveyResult).toBeTruthy()
     })
 
-    test('Should update survey result if its not new', async () => {
+    test('should update survey result if its not new', async () => {
       const survey = await mockSurvey()
       const account = await mockAccount()
 
@@ -116,7 +116,7 @@ describe('Account Mongo Repository', () => {
   })
 
   describe('loadBySurveyId()', () => {
-    test('Should load survey result', async () => {
+    test('should load survey result', async () => {
       const survey = await mockSurvey()
       const account = await mockAccount()
       const account2 = await mockAccount()
@@ -147,7 +147,7 @@ describe('Account Mongo Repository', () => {
       expect(surveyResult.answers[1].isCurrentAccountAnswer).toBe(false)
     })
 
-    test('Should load survey result 2', async () => {
+    test('should load survey result 2', async () => {
       const survey = await mockSurvey()
       const account = await mockAccount()
       const account2 = await mockAccount()
@@ -180,7 +180,7 @@ describe('Account Mongo Repository', () => {
       expect(surveyResult.answers[1].isCurrentAccountAnswer).toBe(false)
     })
 
-    test('Should load survey result 3', async () => {
+    test('should load survey result 3', async () => {
       const survey = await mockSurvey()
       const account = await mockAccount()
       const account2 = await mockAccount()
@@ -208,7 +208,7 @@ describe('Account Mongo Repository', () => {
       expect(surveyResult.answers[1].isCurrentAccountAnswer).toBe(false)
     })
 
-    test('Should return null if there is no survey result', async () => {
+    test('should return null if there is no survey result', async () => {
       const survey = await mockSurvey()
       const account = await mockAccount()
       const sut = makeSut()

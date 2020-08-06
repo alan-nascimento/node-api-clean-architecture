@@ -30,7 +30,7 @@ describe('DbAddSurvey Usecase', () => {
     MockDate.reset()
   })
 
-  it('Should call AddSurveyRepository with correct values', async () => {
+  it('should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositorySpy } = makeSut()
 
     const surveyData = mockAddSurveyParams()
@@ -40,7 +40,7 @@ describe('DbAddSurvey Usecase', () => {
     expect(addSurveyRepositorySpy.addSurveyParams).toEqual(surveyData)
   })
 
-  it('Should throw if AddSurveyRepository throws', async () => {
+  it('should throw if AddSurveyRepository throws', async () => {
     const { sut, addSurveyRepositorySpy } = makeSut()
 
     jest.spyOn(addSurveyRepositorySpy, 'add').mockImplementationOnce(throwError)

@@ -33,7 +33,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     role = faker.random.word()
   })
 
-  it('Should call Decrypter with correct ciphertext', async () => {
+  it('should call Decrypter with correct ciphertext', async () => {
     const { sut, decrypterSpy } = makeSut()
 
     await sut.load(token, role)
@@ -41,7 +41,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     expect(decrypterSpy.ciphertext).toBe(token)
   })
 
-  it('Should return null if Decrypter returns null', async () => {
+  it('should return null if Decrypter returns null', async () => {
     const { sut, decrypterSpy } = makeSut()
 
     decrypterSpy.plaintext = null
@@ -51,7 +51,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     expect(account).toBeNull()
   })
 
-  it('Should call LoadAccountByTokenRepository with correct values', async () => {
+  it('should call LoadAccountByTokenRepository with correct values', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
 
     await sut.load(token, role)
@@ -60,7 +60,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     expect(loadAccountByTokenRepositorySpy.role).toBe(role)
   })
 
-  it('Should return null if LoadAccountByTokenRepository returns null', async () => {
+  it('should return null if LoadAccountByTokenRepository returns null', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
 
     loadAccountByTokenRepositorySpy.accountModel = null
@@ -70,7 +70,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     expect(account).toBeNull()
   })
 
-  it('Should return an account on success', async () => {
+  it('should return an account on success', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
 
     const account = await sut.load(token, role)
@@ -78,7 +78,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     expect(account).toEqual(loadAccountByTokenRepositorySpy.accountModel)
   })
 
-  it('Should throw if Decrypter throws', async () => {
+  it('should throw if Decrypter throws', async () => {
     const { sut, decrypterSpy } = makeSut()
 
     jest.spyOn(decrypterSpy, 'decrypt').mockImplementationOnce(throwError)
@@ -88,7 +88,7 @@ describe('DbLoadAccountByToken Usecase', () => {
     expect(account).toBeNull()
   })
 
-  it('Should throw if LoadAccountByTokenRepository throws', async () => {
+  it('should throw if LoadAccountByTokenRepository throws', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
 
     jest.spyOn(loadAccountByTokenRepositorySpy, 'loadByToken').mockImplementationOnce(throwError)

@@ -33,7 +33,7 @@ describe('DbSaveSurveyResult Usecase', () => {
     MockDate.reset()
   })
 
-  it('Should call SaveSurveyResultRepository with correct values', async () => {
+  it('should call SaveSurveyResultRepository with correct values', async () => {
     const { sut, saveSurveyResultRepositorySpy } = makeSut()
 
     const surveyResultData = mockSaveSurveyResultParams()
@@ -43,7 +43,7 @@ describe('DbSaveSurveyResult Usecase', () => {
     expect(saveSurveyResultRepositorySpy.saveSurveyResultParams).toEqual(surveyResultData)
   })
 
-  it('Should throw if SaveSurveyResultRepository throws', async () => {
+  it('should throw if SaveSurveyResultRepository throws', async () => {
     const { sut, saveSurveyResultRepositorySpy } = makeSut()
 
     jest.spyOn(saveSurveyResultRepositorySpy, 'save').mockImplementationOnce(throwError)
@@ -53,7 +53,7 @@ describe('DbSaveSurveyResult Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  it('Should call LoadSurveyResultRepository with correct values', async () => {
+  it('should call LoadSurveyResultRepository with correct values', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
 
     const surveyResultData = mockSaveSurveyResultParams()
@@ -63,7 +63,7 @@ describe('DbSaveSurveyResult Usecase', () => {
     expect(loadSurveyResultRepositorySpy.surveyId).toBe(surveyResultData.surveyId)
   })
 
-  it('Should throw if LoadSurveyResultRepository throws', async () => {
+  it('should throw if LoadSurveyResultRepository throws', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
 
     jest.spyOn(loadSurveyResultRepositorySpy, 'loadBySurveyId').mockImplementationOnce(throwError)
@@ -73,7 +73,7 @@ describe('DbSaveSurveyResult Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  it('Should return SurveyResult on success', async () => {
+  it('should return SurveyResult on success', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
 
     const surveyResult = await sut.save(mockSaveSurveyResultParams())
