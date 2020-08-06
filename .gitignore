@@ -6,3 +6,4 @@ data
 .env
 .vscode
 globalConfig.json
+.DS_Store
